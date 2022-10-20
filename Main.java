@@ -3,8 +3,38 @@ package TarefaGrafosSardas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
+
+    public static ArrayList<Sarda> inputListaSardas()
+    {
+        ArrayList<Sarda> listSardas = new ArrayList<>();
+
+        
+        int numSardas;
+        do {
+            Scanner input = new Scanner(System.in);
+
+            System.out.print("Número de sardas (-1 pra finalizar): ");
+            numSardas = input.nextInt();
+            input.nextLine();
+
+            
+            for (int i = 1; i <= numSardas; i++) {
+                System.out.printf("Coordenadas sarda %d: ", i);
+                String sardaCoordenadas = input.nextLine();
+
+                String[] sardaCoordenadasSplit = sardaCoordenadas.split(" ");
+
+                listSardas.add(new Sarda(String.format("Sarda %d", i), Double.valueOf(sardaCoordenadasSplit[0])
+                    , Double.valueOf(sardaCoordenadasSplit[1])));
+            }
+            
+        } while (numSardas != -1);
+
+        return listSardas;
+    }
     public static void main(String[] args) {
         Sarda sarda1 = new Sarda("Sarda1", Double.valueOf(1), Double.valueOf(1));
         Sarda sarda2 = new Sarda("Sarda2", Double.valueOf(2), Double.valueOf(2));
@@ -31,5 +61,13 @@ public class Main {
         System.out.println();
         kruskal.execute();
         System.out.println(kruskal.getFloresta());
+
+        System.out.println("=====Início=====");
+
+        ArrayList<Sarda> listSardas = inputListaSardas();
+        System.out.println(listSardas);
+        
+        
+
     }
 }
