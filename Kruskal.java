@@ -6,24 +6,15 @@ import java.util.HashMap;
 public class Kruskal {
     private int contArestasAceitas = 0;
     private ArrayList<Aresta> listOrdenadaArestas;
-    // private HashMap<Sarda, ArrayList<Sarda>> listVertice = new HashMap<>();
     private ArrayList<Aresta> floresta = new ArrayList<>();
 
     public Kruskal(Grafo grafo) {
         this.listOrdenadaArestas = grafo.getListaArestas();
-
-        // for (Aresta aresta : listOrdenadaArestas) {
-        // if(aresta.getSarda1() != null) listVertice.put(aresta.getSarda1(), new
-        // ArrayList<Sarda>());
-        // if(aresta.getSarda2() != null) listVertice.put(aresta.getSarda2(), new
-        // ArrayList<Sarda>());
-        // }
     }
 
     public void execute() {
         for (int i = 0; i < listOrdenadaArestas.size(); i++) {
             Aresta arestaAtual = this.listOrdenadaArestas.get(i);
-            System.out.println(arestaAtual);
 
             if(arestaAtual.getSarda1() != null && arestaAtual.getSarda2() != null && floresta.size() == 0){
                 floresta.add(arestaAtual);
@@ -99,7 +90,7 @@ public class Kruskal {
             somaTinta += aresta.getValorAresta();
         }
 
-        System.out.printf("Quantidade de tinta necessária: %.3f%n", somaTinta);
+        System.out.printf("Quantidade mínima de tinta necessária: %.3f%n", somaTinta);
     }
 
     public int getContArestasAceitas() {
@@ -125,13 +116,4 @@ public class Kruskal {
     public void setFloresta(ArrayList<Aresta> floresta) {
         this.floresta = floresta;
     }
-
-    // public HashMap<Sarda, ArrayList<Sarda>> getListVertice() {
-    // return listVertice;
-    // }
-
-    // public void setListVertice(HashMap<Sarda, ArrayList<Sarda>> listVertice) {
-    // this.listVertice = listVertice;
-    // }
-
 }
