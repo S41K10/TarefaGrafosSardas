@@ -3,7 +3,7 @@ package TarefaGrafosSardas;
 import java.util.Formatter;
 import java.util.HashMap;
 
-public class Aresta implements Comparable<Aresta>
+public class Aresta extends Object implements Comparable<Aresta> 
 {
     private Sarda sarda1;
     private Sarda sarda2;
@@ -65,8 +65,15 @@ public class Aresta implements Comparable<Aresta>
         return valorAresta;
     }
 
-    public void setValorAresta(Double valorAresta) {
-        this.valorAresta = valorAresta;
+    public void setValorAresta() {
+        if(sarda1 != null && sarda2 != null){
+            this.valorAresta = Math.sqrt(
+            Math.pow( ( sarda1.getCoordX() - sarda2.getCoordX() ) , 2)
+             + 
+            Math.pow( ( sarda1.getCoordY() - sarda2.getCoordY() ), 2)
+            );
+        }
     }
 
+    
 }
