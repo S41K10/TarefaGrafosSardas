@@ -3,7 +3,7 @@ package TarefaGrafosSardas;
 import java.util.Formatter;
 import java.util.HashMap;
 
-public class Aresta extends Object implements Comparable<Aresta> 
+public class Aresta implements Comparable<Aresta> 
 {
     private Sarda sarda1;
     private Sarda sarda2;
