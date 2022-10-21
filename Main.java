@@ -7,67 +7,80 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static ArrayList<Sarda> inputListaSardas()
-    {
+    public static ArrayList<Aresta> generateArestas(ArrayList<Sarda> listSardas) {
+        ArrayList<Aresta> listArestas = new ArrayList<>();
+
+        for (Sarda sarda : listSardas) {
+
+            for (Sarda sarda2 : listSardas) {
+
+                if (!sarda.getSardaLabel().equals(sarda2.getSardaLabel())) {
+                    Aresta aresta = new Aresta(sarda, sarda2);
+
+                    if (!containsAresta(listArestas, aresta)) {
+                        listArestas.add(aresta);
+                    }
+                }
+
+            }
+
+        }
+        return listArestas;
+    }
+
+    public static boolean containsAresta(ArrayList<Aresta> listAresta, Aresta arestaComparar) {
+        for (Aresta arestaListAresta : listAresta) {
+            String listArestaSarda1 = arestaListAresta.getSarda1().getSardaLabel();
+            String listArestaSarda2 = arestaListAresta.getSarda2().getSardaLabel();
+
+            String arestaCompararSarda1 = arestaComparar.getSarda1().getSardaLabel();
+            String arestaCompararSarda2 = arestaComparar.getSarda2().getSardaLabel();
+
+            if (listArestaSarda1.equals(arestaCompararSarda1) && listArestaSarda2.equals(arestaCompararSarda2)) {
+                return true;
+            } else if (listArestaSarda1.equals(arestaCompararSarda2) && listArestaSarda2.equals(arestaCompararSarda1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<Sarda> inputListaSardas() {
         ArrayList<Sarda> listSardas = new ArrayList<>();
 
-        
         int numSardas;
-        do {
             Scanner input = new Scanner(System.in);
 
-            System.out.print("Número de sardas (-1 pra finalizar): ");
+            System.out.print("Número de sardas: ");
             numSardas = input.nextInt();
             input.nextLine();
 
-            
             for (int i = 1; i <= numSardas; i++) {
                 System.out.printf("Coordenadas sarda %d: ", i);
                 String sardaCoordenadas = input.nextLine();
 
                 String[] sardaCoordenadasSplit = sardaCoordenadas.split(" ");
 
-                listSardas.add(new Sarda(String.format("Sarda %d", i), Double.valueOf(sardaCoordenadasSplit[0])
-                    , Double.valueOf(sardaCoordenadasSplit[1])));
+                listSardas.add(new Sarda(String.format("Sarda %d", i), Double.valueOf(sardaCoordenadasSplit[0]),
+                        Double.valueOf(sardaCoordenadasSplit[1])));
             }
-            
-        } while (numSardas != -1);
+
 
         return listSardas;
     }
+
     public static void main(String[] args) {
-        Sarda sarda1 = new Sarda("Sarda1", Double.valueOf(1), Double.valueOf(1));
-        Sarda sarda2 = new Sarda("Sarda2", Double.valueOf(2), Double.valueOf(2));
-        Sarda sarda3 = new Sarda("Sarda3", Double.valueOf(2), Double.valueOf(4));
-        
-
-        Aresta aresta1 = new Aresta(sarda1, sarda2);
-        Aresta aresta2 = new Aresta(sarda2, sarda3);
-        // Aresta aresta3 = new Aresta(sarda3, null);
-
-        ArrayList<Aresta> arestas = new ArrayList<>(Arrays.asList(aresta1, aresta2));
-
-        System.out.println(arestas);
-
-        Grafo grafo = new Grafo(arestas);
-
-        System.out.println();
-        System.out.println("lista de arestas depois do método Collections.sort():");
-        System.out.println(grafo.getListaArestas());
-        System.out.println(grafo.getListaSardas());
-
-        Kruskal kruskal = new Kruskal(grafo);
-        System.out.println(kruskal.getListOrdenadaArestas());
-        System.out.println();
-        kruskal.execute();
-        System.out.println(kruskal.getFloresta());
 
         System.out.println("=====Início=====");
 
         ArrayList<Sarda> listSardas = inputListaSardas();
-        System.out.println(listSardas);
-        
-        
+        ArrayList<Aresta> listArestas = generateArestas(listSardas);
+
+        System.out.println("Lista de arestas: " + listArestas);
+
+        Grafo grafo = new Grafo(listArestas);
+        Kruskal kruskal = new Kruskal(grafo);
+        kruskal.execute();
 
     }
 }
